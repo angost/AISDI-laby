@@ -34,16 +34,68 @@ def divide(list_to_sort):
 
 def merge(left, right):
     merged = []
+    # nad ktorym j-tem sie teraz zastanawiamy
+    j_pointer = 0
     for i in range(len(left)):
-        # TODO naprawic, jak j sie koncza
-        for j in range(len(right)):
+        # nie przegladamy j-tow ktore zostaly juz wykorzystane
+        for j in range(j_pointer, len(right)):
             if left[i] < right[j]:
                 merged.append(left[i])
                 break
             else:
                 merged.append(right[j])
-    merged += right[j:]
+                j_pointer = j + 1
+        # tutaj ladujemy albo po breaku albo gdy j sie skonczyly
+        if j_pointer == len(right):
+            # j-ty sie skonczyly -> wrzucamy pozostala liste i
+            merged += left[i:]
+            break
+    # i sie skonczyly -> wrzucamy pozostala liste j
+    merged += right[j_pointer:]
     return merged
-    
+
+def merge_no_comments(left, right):
+    merged = []
+    j_pointer = 0
+    for i in range(len(left)):
+        for j in range(j_pointer, len(right)):
+            if left[i] < right[j]:
+                merged.append(left[i])
+                break
+            else:
+                merged.append(right[j])
+                j_pointer = j + 1
+        if j_pointer == len(right):
+            merged += left[i:]
+            break
+    merged += right[j_pointer:]
+    return merged
+
+# 2 10 11   4
+'''
+00 -> 2
+10 -> 4
+1- -> [i:]
+2
+'''
+
+# 0 2 4    1 3 5
+'''
+00 -> 0
+10 -> 1
+11 -> 2
+21 -> 3
+22 -> 4
+- -> [j_pointer:]
+'''
+# 1 5 6    2 3 4
+'''
+00 -> 1
+10 -> 2
+11 -> 3
+12 -> 4
+1- -> [i:]
+'''
+
 def quick_sort(list_to_sort):
     return list_to_sort
