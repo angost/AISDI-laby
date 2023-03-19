@@ -25,7 +25,7 @@ def merge_sort(list_to_sort):
 
 def divide(list_to_sort):
     length = len(list_to_sort)
-    if length == 1:
+    if length == 1 or length == 0:
         return list_to_sort
     middle = ceil(length/2)
     left = divide(list_to_sort[:middle])
@@ -71,31 +71,57 @@ def merge_no_comments(left, right):
     merged += right[j_pointer:]
     return merged
 
-# 2 10 11   4
-'''
-00 -> 2
-10 -> 4
-1- -> [i:]
-2
-'''
-
-# 0 2 4    1 3 5
-'''
-00 -> 0
-10 -> 1
-11 -> 2
-21 -> 3
-22 -> 4
-- -> [j_pointer:]
-'''
-# 1 5 6    2 3 4
-'''
-00 -> 1
-10 -> 2
-11 -> 3
-12 -> 4
-1- -> [i:]
-'''
 
 def quick_sort(list_to_sort):
-    return list_to_sort
+
+    length = len(list_to_sort)
+    if length == 1 or length == 0:
+        return list_to_sort
+
+    pivot = -1
+    bigger_left = 0
+    smaller_right = length - 2
+
+    found_bigger_left = False
+    found_smaller_right = False
+
+    for loop_number in range(length - 1):
+        # Od lewej
+        for i in range(bigger_left, length - 1):
+            if list_to_sort[i] > list_to_sort[pivot]:
+                bigger_left = i
+                found_bigger_left = True
+                break
+            # Jesli to jest ostatnie i i nie znaleziono LW -> pivot jest najwiekszy
+            # if i == length-2:
+            #     pass
+        if not found_bigger_left:
+            bigger_left = length-1
+            break
+
+        # Od prawej
+        for i in range(0, smaller_right + 1):
+            if list_to_sort[smaller_right - i] < list_to_sort[pivot]:
+                smaller_right = smaller_right - i
+                found_smaller_right = True
+                break
+            # Sprawdzamy 0 element listy i nie znaleziono PM -> pivot jest najmniejszy
+            if i == length - 2:
+                list_to_sort[0], list_to_sort[pivot] = list_to_sort[pivot], list_to_sort[0]
+        if not found_smaller_right:
+             bigger_left = 0
+             break
+
+        # lewy > prawy -> stop
+        if bigger_left > smaller_right:
+            list_to_sort[bigger_left], list_to_sort[pivot] = list_to_sort[pivot], list_to_sort[bigger_left]
+            break
+
+        #swap
+        list_to_sort[bigger_left], list_to_sort[smaller_right] = list_to_sort[smaller_right], list_to_sort[bigger_left]
+
+    left_sorted = quick_sort(list_to_sort[:bigger_left])
+    right_sorted = quick_sort(list_to_sort[bigger_left + 1:])
+    pivot = [list_to_sort[bigger_left]]
+    return left_sorted + pivot + right_sorted
+
