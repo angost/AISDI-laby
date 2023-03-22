@@ -124,4 +124,3 @@ def quick_sort(list_to_sort):
     right_sorted = quick_sort(list_to_sort[bigger_left + 1:])
     pivot = [list_to_sort[bigger_left]]
     return left_sorted + pivot + right_sorted
-
