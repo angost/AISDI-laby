@@ -32,6 +32,8 @@ def make_plot(sorting_function):
     ax.plot(x, y, linewidth=2.0)
     ax.set(xticks=np.linspace(1000, 10000, 10))
     plt.title(f'{sorting_function.__name__}')
+    plt.xlabel('Number of words')
+    plt.ylabel('Time [s]')
 
     plt.savefig(f'{sorting_function.__name__}.png')
     # plt.show()
@@ -52,8 +54,11 @@ def compare_plot():
     ax.plot(x, quicky, linewidth=2.0, label='quick')
 
     plt.legend(loc="upper left")
+    plt.xlabel('Number of words')
+    plt.ylabel('Time [s]')
 
     ax.set(xticks=np.linspace(1000, 10000, 10))
+
 
     plt.savefig('comparison.png')
     #plt.show()
