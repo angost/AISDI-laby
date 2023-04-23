@@ -23,6 +23,7 @@ def push_2(el, heap:list):
         p_index = max((index-1)//2, 0)
     return heap
 
+
 # Removing heap's root
 def pop_2(heap):
     if heap == []:
@@ -54,8 +55,8 @@ def make_heap_2(list):
         heap = push_2(el, heap)
     return heap
 
-def print_heap(heap:list):
-    n_of_levels = ceil(log(len(heap), 2))
+def print_heap_2(heap:list):
+    n_of_levels = ceil(log(len(heap)+1, 2))
     max_len = 2**(n_of_levels-1)
     for i in range(n_of_levels):
         level_start = (2**i)-1
@@ -73,9 +74,10 @@ def print_heap(heap:list):
     #len=7
     #7-7+1
     #len=6 7-6+1
+    #
 print("aaa")
 # heap = make_heap_2([5,2,4,1,0,3])
 heap = make_heap_2([5,2,4,1,0,3,9,5,7,1])
 print(heap)
-print_heap(heap)
+print_heap_2(heap)
 
