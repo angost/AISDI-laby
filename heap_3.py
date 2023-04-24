@@ -22,27 +22,28 @@ def make_heap_3(list):
         heap = push_3(el, heap)
     return heap
 
-# def print_heap_3(heap:list):
-#     n_of_levels = 0
-#     n_of_elements = 0
-#     while n_of_elements < len(heap):
-#         n_of_elements += 3**n_of_levels
-#         n_of_levels += 1
-#     print(n_of_levels)
-#     max_len = 3**(n_of_levels-1)
-#     for i in range(n_of_levels):
-#         level_start = (3**i)-1 # wymyslic
-#         level_end = (3**i)-1 + 3**i # wymyslic
-#         fill_level = []
-#         if len(heap) <= level_end:
-#             fill_level = [" " for j in range(level_end-len(heap)+1)]
-#             level_end = len(heap)
-#         level = heap[level_start:level_end] + fill_level
-#         level = [str(num) for num in level]
-#         print((" ".join(level)).center(max_len*2-1, " "))
+def print_heap_3(heap:list):
+    n_of_levels = 0
+    n_of_elements = 0
+    while n_of_elements < len(heap):
+        n_of_elements += 3**n_of_levels
+        n_of_levels += 1
+    print(n_of_levels)
+    max_len = 3**(n_of_levels-1)
+    level_start = 0
+    for i in range(n_of_levels):
+        level_end = level_start + 3**i
+        fill_level = []
+        if len(heap) <= level_end:
+            fill_level = [" " for j in range(level_end-len(heap)+1)]
+            level_end = len(heap)
+        level = heap[level_start:level_end] + fill_level
+        level = [str(num) for num in level]
+        print((" ".join(level)).center(max_len*2-1, " "))
+        level_start = level_end
 
 list = [5,2,4,1,0,3,9,5,7,1]
-list = [1 for i in range(40)]
+# list = [1 for i in range(40)]
 print(list)
 heap = make_heap_3(list)
 print(heap)
