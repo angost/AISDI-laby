@@ -82,11 +82,11 @@ def print_heap_2(heap:list):
     #7-7+1
     #len=6 7-6+1
     #
-print("aaa")
-# heap = make_heap_2([5,2,4,1,0,3])
-heap = make_heap_2([5,2,4,1,0,3,9,5,7,1])
-print(heap)
-print_heap_2(heap)
-pop_2(heap)
-print_heap_2(heap)
+# print("aaa")
+# # heap = make_heap_2([5,2,4,1,0,3])
+# heap = make_heap_2([5,2,4,1,0,3,9,5,7,1])
+# print(heap)
+# # print_heap_2(heap)
+# # pop_2(heap)
+# # print_heap_2(heap)
 

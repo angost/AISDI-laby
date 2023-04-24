@@ -33,17 +33,18 @@ class Heap():
         heap.pop()
         heap_end = len(heap)
         index = 0
-        lc_index = 2 * index + 1
-        rc_index = 2 * index + 2
 
         el_on_wrong_position = True
         while el_on_wrong_position:
             children = []
-            # Checking if l,r child exists
-            if lc_index < heap_end:
-                children.append(lc_index)
-            if rc_index < heap_end:
-                children.append(rc_index)
+
+            # Checking which children exist
+            for child_number in range(1, self.degree + 1):
+                c_index = self.degree * index + child_number
+                if c_index < heap_end:
+                    children.append(c_index)
+                else:
+                    break
 
             # Checking if swap is required
             if not children:
@@ -52,8 +53,6 @@ class Heap():
                 greater_c_index = max(children, key= lambda i : heap[i])
                 heap[index], heap[greater_c_index] = heap[greater_c_index], heap[index]
                 index = greater_c_index
-                lc_index = 2 * index + 1
-                rc_index = 2 * index + 2
 
         self.value = heap
         return self.value
@@ -61,11 +60,16 @@ class Heap():
     def print(self):
         heap = self.value
 
-        n_of_levels = ceil(log(len(heap)+1, 2))
-        max_len = 2**(n_of_levels-1)
+        n_of_levels = 0
+        n_of_elements = 0
+        while n_of_elements < len(heap):
+            n_of_elements += self.degree**n_of_levels
+            n_of_levels += 1
+        max_len = self.degree**(n_of_levels-1)
+
+        level_start = 0
         for i in range(n_of_levels):
-            level_start = (2**i)-1
-            level_end = (2**(i+1)-1)
+            level_end = level_start + self.degree**i
             fill_level = []
             if len(heap) <= level_end:
                 fill_level = [" " for j in range(level_end-len(heap)+1)]
@@ -73,12 +77,11 @@ class Heap():
             level = heap[level_start:level_end] + fill_level
             level = [str(num) for num in level]
             print((" ".join(level)).center(max_len*2-1, " "))
+            level_start = level_end
 
-
-
-list = [5,2,4,1,0,3]
+# list = [5,2,4,1,0,3]
 list = [5,2,4,1,0,3,9,5,7,1]
-heap = Heap(2, list)
+heap = Heap(4, list)
 print(heap.value)
 heap.print()
 heap.pop()
