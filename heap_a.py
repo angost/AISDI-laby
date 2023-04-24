@@ -51,14 +51,18 @@ class Heap():
                 el_on_wrong_position = False
             else:
                 greater_c_index = max(children, key= lambda i : heap[i])
-                heap[index], heap[greater_c_index] = heap[greater_c_index], heap[index]
-                index = greater_c_index
+                if heap[greater_c_index] > heap[index]:
+                    heap[index], heap[greater_c_index] = heap[greater_c_index], heap[index]
+                    index = greater_c_index
+                else:
+                    el_on_wrong_position = False
 
         self.value = heap
         return self.value
 
-    def print(self):
+    def __str__(self):
         heap = self.value
+        txt_heap = ''
 
         n_of_levels = 0
         n_of_elements = 0
@@ -76,13 +80,14 @@ class Heap():
                 level_end = len(heap)
             level = heap[level_start:level_end] + fill_level
             level = [str(num) for num in level]
-            print((" ".join(level)).center(max_len*2-1, " "))
+            txt_heap += (" ".join(level)).center(max_len*2-1, " ") + '\n'
             level_start = level_end
+        return txt_heap
 
 # list = [5,2,4,1,0,3]
-list = [5,2,4,1,0,3,9,5,7,1]
+list = [5,2,4,0,1,3,9,5,7,1,9,0,31,5,12,10,5,8,9,3,45,7,9,3,6,3,7,9,235,73,42,2,34,7,9,0,0,0,0,1,1,13,6,7]
 heap = Heap(4, list)
 print(heap.value)
-heap.print()
+print(heap)
 heap.pop()
-heap.print()
+print(heap)
