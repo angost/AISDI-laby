@@ -37,16 +37,23 @@ def pop_2(heap):
 
     el_on_wrong_position = True
     while el_on_wrong_position:
-        if lc_index < heap_end and heap[index] < heap[lc_index]:
-            heap[index], heap[lc_index] = heap[lc_index], heap[index]
-            index = lc_index
-            lc_index = 2 * index + 1
-        elif rc_index < heap_end and heap[index] < heap[rc_index]:
-            heap[index], heap[rc_index] = heap[rc_index], heap[index]
-            index = rc_index
-            rc_index = 2 * index + 2
-        else:
+        children = []
+        # Checking if l,r child exists
+        if lc_index < heap_end:
+            children.append(lc_index)
+        if rc_index < heap_end:
+            children.append(rc_index)
+
+        # Checking if swap is required
+        if not children:
             el_on_wrong_position = False
+        else:
+            greater_c_index = max(children, key= lambda i : heap[i])
+            heap[index], heap[greater_c_index] = heap[greater_c_index], heap[index]
+            index = greater_c_index
+            lc_index = 2 * index + 1
+            rc_index = 2 * index + 2
+
     return heap
 
 def make_heap_2(list):
@@ -79,5 +86,7 @@ print("aaa")
 # heap = make_heap_2([5,2,4,1,0,3])
 heap = make_heap_2([5,2,4,1,0,3,9,5,7,1])
 print(heap)
+print_heap_2(heap)
+pop_2(heap)
 print_heap_2(heap)
 
