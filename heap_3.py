@@ -16,6 +16,36 @@ def push_3(el, heap:list):
         p_index = max((index-1)//3, 0)
     return heap
 
+# Removing heap's root
+def pop_3(heap):
+    if heap == []:
+        return heap
+    heap[0] = heap[len(heap)-1]
+    heap.pop()
+    heap_end = len(heap)
+    index = 0
+    lc_index = 3 * index + 1
+    mc_index = 3 * index + 2
+    rc_index = 3 * index + 3
+
+    el_on_wrong_position = True
+    while el_on_wrong_position:
+        if lc_index < heap_end and heap[index] < heap[lc_index]:
+            heap[index], heap[lc_index] = heap[lc_index], heap[index]
+            index = lc_index
+            lc_index = 3 * index + 1
+        elif mc_index < heap_end and heap[index] < heap[mc_index]:
+            heap[index], heap[mc_index] = heap[mc_index], heap[index]
+            index = mc_index
+            mc_index = 3 * index + 2
+        elif rc_index < heap_end and heap[index] < heap[rc_index]:
+            heap[index], heap[rc_index] = heap[rc_index], heap[index]
+            index = rc_index
+            rc_index = 3 * index + 3
+        else:
+            el_on_wrong_position = False
+    return heap
+
 def make_heap_3(list):
     heap = []
     for el in list:
@@ -28,7 +58,7 @@ def print_heap_3(heap:list):
     while n_of_elements < len(heap):
         n_of_elements += 3**n_of_levels
         n_of_levels += 1
-    print(n_of_levels)
+    # print(n_of_levels)
     max_len = 3**(n_of_levels-1)
     level_start = 0
     for i in range(n_of_levels):
@@ -47,4 +77,6 @@ list = [5,2,4,1,0,3,9,5,7,1]
 print(list)
 heap = make_heap_3(list)
 print(heap)
+print_heap_3(heap)
+pop_3(heap)
 print_heap_3(heap)
