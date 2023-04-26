@@ -15,7 +15,7 @@ def measure_create(x, elements, n):
     times = []
     for i in x:
         start = time.process_time()
-        Heap(n, elements[:i])
+        Heap(n, elements[:int(i)])
         stop = time.process_time()
         times.append(stop-start)
     return times
@@ -25,7 +25,7 @@ def measure_pop(x, elements, n):
     for i in x:
         heap = Heap(n, elements)
         start = time.process_time()
-        for j in range(i):
+        for j in range(int(i)):
             heap.pop()
         stop = time.process_time()
         times.append(stop-start)
@@ -52,7 +52,7 @@ def compare_plot(heap_elements, measure_type):
     fig, ax = plt.subplots()
     measure, name = choose_measure(measure_type)
 
-    x = np.linspace(1000, 10001, 10)
+    x = np.linspace(1000, 1000001, 10)
     two = measure(x, heap_elements, 2)
     three = measure(x, heap_elements, 3)
     four = measure(x, heap_elements, 4)
@@ -65,16 +65,24 @@ def compare_plot(heap_elements, measure_type):
     plt.xlabel('Number of elements')
     plt.ylabel('Time [s]')
 
-    ax.set(xticks=np.linspace(1000, 10000, 10))
+    ax.set(xticks=np.linspace(1000, 1000000, 10))
 
 
-    # plt.savefig(f'heap_{name}_comparison.png')
+    plt.savefig(f'heap_{name}_comparison.png')
     plt.show()
 
 
 def main():
-    random_numbers = random.sample(range(0,300000), 100)
-    make_plot(random_numbers, 2, 1)
+    random_numbers = random.sample(range(0,3_000_000), 1_000_000)
+    # make_plot(random_numbers, 2, 1)
+    # make_plot(random_numbers, 3, 1)
+    # make_plot(random_numbers, 4, 1)
+    # make_plot(random_numbers, 2, 2)
+    # make_plot(random_numbers, 3, 2)
+    # make_plot(random_numbers, 4, 2)
+    compare_plot(random_numbers, 1)
+    # compare_plot(random_numbers, 2)
+
 
 
 if __name__ == "__main__":
