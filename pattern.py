@@ -18,17 +18,17 @@ def find_naive(pattern, text):
 def find_KMP(pattern, text):
     index = []
     counter = 0
+    if pattern == "":
+        return index
     for i in range(len(text)):
         if pattern[counter] == text[i]:
             counter += 1
         else:
             counter = 0
-            if pattern[counter] == text[i]:
-                counter = 1
         if counter == len(pattern):
             index.append(i - counter + 1)
             counter = 0
-            if pattern[counter] == text[i]:
+            if pattern[counter] == text[i] and len(pattern) != 1:
                 counter = 1
     return index
 
@@ -60,12 +60,14 @@ def find_KR(pattern, text):
 
 
 
-txt = 'AAL MA MAMALEGOMALEGO MALEGO KOTA'
-pat = 'MALEGO'
-# txt = "AAAAAAAAAAAAAAAAAA"
-# pat = "A"
-txt = 'MMAMMANN GBRGW'
-pat = 'MANN'
-print(find_naive(pat, txt))
+# txt = 'AAL MA MAMALEGOMALEGO MALEGO KOTA'
+# pat = 'MALEGO'
+# # txt = "AAAAAAAAAAAAAAAAAA"
+# # # pat = "A"
+# # txt = 'MMAMMANN GBRGW'
+# # pat = 'MANN'
+# txt = 'AAAA'
+# pat = 'AAA'
+# print(find_naive(pat, txt))
 # print(find_KMP(pat, txt))
-print(find_KR(pat, txt))
+# print(find_KR(pat, txt))
