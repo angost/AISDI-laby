@@ -110,6 +110,16 @@ def test_KMP_part_same():
     pat = 'MANN'
     assert find_KMP(pat, text) == [4]
 
+# CDRATYABRABARABBR
+# ABB
+
+# ABABABA
+# ABAB
+
+# BBBC
+# BBC
+# niezaleznie czy mamy fragment wzorca i znalezlismy pelen czy mamy fragment i jakis znak sie roznil -> wsrod juz znalezionego fragmentu szukamy poczatkowego znaku wzorca
+
 def test_KMP_not_full():
     text = 'ABCDE'
     pat = 'CDEF'
