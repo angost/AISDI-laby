@@ -143,8 +143,81 @@ def test_KMP_pattern_empty():
     pat = ''
     assert find_KMP(pat, text) == []
 
-
 def test_KMP_pattern_last():
     text = "BCA"
     pat = "A"
     assert find_KMP(pat, text) == [2]
+
+
+def test_KR_simple():
+    text = "ALA MA MALEGO KOTA"
+    pat = "MALEGO"
+    assert find_KR(pat, text) == [7]
+
+def test_KR_multiple():
+    text = "ALA MA MALEGOMALEGO KOTA"
+    pat = "MALEGO"
+    assert find_KR(pat, text) == [7,13]
+
+def test_KR_one_letter_pattern_spread():
+    text = "ALA MA MALEGO KOTA"
+    pat = "A"
+    assert find_KR(pat, text) == [0, 2, 5, 8, 17]
+
+def test_KR_one_letter_pattern_together():
+    text = "AAAA"
+    pat = "A"
+    assert find_KR(pat, text) == [0, 1, 2, 3]
+
+def test_KR_intersecting_one_letter():
+    text = "AAAA"
+    pat = "AA"
+    assert find_KR(pat, text) == [0, 1, 2]
+
+def test_KR_intersecting_more_letters():
+    text = "AAAA"
+    pat = "AAA"
+    assert find_KR(pat, text) == [0, 1]
+
+def test_KR_part_same():
+    text = 'MMAMMANN'
+    pat = 'MANN'
+    assert find_KR(pat, text) == [4]
+
+def test_KR_not_full():
+    text = 'ABCDE'
+    pat = 'CDEF'
+    assert find_KR(pat, text) == []
+
+def test_KR_pattern_longer():
+    text = 'ABCD'
+    pat = 'ABCDE'
+    assert find_KR(pat, text) == []
+
+    text = 'ABCDEF'
+    pat = 'XYZXYZXYZ'
+    assert find_KR(pat, text) == []
+
+def test_KR_no_pattern_in_text():
+    text = 'AABAABAAB'
+    pat = 'AC'
+    assert find_KR(pat, text) == []
+
+def test_KR_text_empty():
+    text = ''
+    pat = 'AC'
+    assert find_KR(pat, text) == []
+
+def test_KR_pattern_empty():
+    text = 'ABC'
+    pat = ''
+    assert find_KR(pat, text) == []
+
+    text = ''
+    pat = ''
+    assert find_KR(pat, text) == []
+
+def test_KR_pattern_last():
+    text = "BCA"
+    pat = "A"
+    assert find_KR(pat, text) == [2]

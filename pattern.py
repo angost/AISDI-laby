@@ -41,6 +41,8 @@ def hash(string):
 
 def find_KR(pattern, text):
     index = []
+    if pattern == "":
+        return index
     p_hash = hash(pattern)
     for i in range(len(text)):
         if i == 16:
