@@ -16,22 +16,43 @@ def find_naive(pattern, text):
 
 
 def find_KMP(pattern, text):
+    # znak textu i znak patternu:
+    #ROWNE
+        # pierwsze rowne -> idziemy dalej
+        # rowne w srodku patternu -> idziemy dalej
+        # ostatnie rowne -> zapisz i PRZEGLADAJ W POPRZEDNICH
+    #ROZNE
+        # kolejne rozne -> idziemy dalej
+        # pierwsze rozne (przerwanie patternu) -> PRZEGLADAJ W POPRZEDNICH
+
     index = []
     counter = 0
     if pattern == "":
         return index
-    for i in range(len(text)):
-        if pattern[counter] == text[i]:
-            counter += 1
-        else:
-            counter = 0
-        if counter == len(pattern):
-            index.append(i - counter + 1)
-            counter = 0
-            if pattern[counter] == text[i] and len(pattern) != 1:
-                counter = 1
-    return index
 
+    i = 0 # text start index
+    while i < len(text):
+        j = 0 # current pattern index
+        while j < len(pattern):
+            last_equal = (text[i+j] == pattern[j]) and (j == len(pattern)-1)
+            first_different = (text[i+j] != pattern[j]) and (j == 0)
+
+            if last_equal or first_different:
+                if last_equal:
+                    index.append(i)
+                # szukanie w dotychczasowym fragmencie początku kolejnego patternu
+                found_next_pattern_start = False
+                for char in range(i+1, i+j+1):
+                    if char == pattern[0]:
+                        i = char
+                        found_next_pattern_start = True
+                        break
+                if not found_next_pattern_start:
+                    i += j
+
+            j += 1
+        i += 1
+    return index
 
 def hash(string):
     hash_value = 0
