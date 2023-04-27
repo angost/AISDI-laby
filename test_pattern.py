@@ -16,16 +16,17 @@ def test_naive_one_letter_pattern_spread():
     pat = "A"
     assert find_naive(pat, text) == [0, 2, 5, 8, 17]
 
-def test_KMP_one_letter_pattern_together():
+def test_naive_one_letter_pattern_together():
     text = "AAAA"
     pat = "A"
     assert find_naive(pat, text) == [0, 1, 2, 3]
 
-def test_naive_intersecting():
+def test_naive_intersecting_one_letter():
     text = "AAAA"
     pat = "AA"
     assert find_naive(pat, text) == [0, 1, 2]
 
+def test_naive_intersecting_more_letters():
     text = "AAAA"
     pat = "AAA"
     assert find_naive(pat, text) == [0, 1]
@@ -94,11 +95,12 @@ def test_KMP_one_letter_pattern_together():
     pat = "A"
     assert find_KMP(pat, text) == [0, 1, 2, 3]
 
-def test_KMP_intersecting():
+def test_KMP_intersecting_one_letter():
     text = "AAAA"
     pat = "AA"
     assert find_KMP(pat, text) == [0, 1, 2]
 
+def test_KMP_intersecting_more_letters():
     text = "AAAA"
     pat = "AAA"
     assert find_KMP(pat, text) == [0, 1]
