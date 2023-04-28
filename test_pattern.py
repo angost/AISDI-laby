@@ -31,6 +31,10 @@ def test_naive_intersecting_more_letters():
     pat = "AAA"
     assert find_naive(pat, text) == [0, 1]
 
+    text = "ABABABA"
+    pat = "ABAB"
+    assert find_naive(pat, text) == [0, 2]
+
 def test_naive_part_same():
     text = 'MMAMMANN'
     pat = 'MANN'
@@ -74,6 +78,16 @@ def test_naive_pattern_last():
     pat = "A"
     assert find_naive(pat, text) == [2]
 
+def test_naive_pattern_first_last_different():
+    text = "XXAXXAXABCAXABCABCCXABCCABCCXBCCXABCC"
+    pat = "ABCC"
+    assert find_naive(pat, text) == [15, 20, 24, 33]
+
+def test_naive_pattern_first_last_same():
+    text = "XXAXXAXAXABXABCDXABCDABCXABCAXABCAABCAXABCABCA"
+    pat = "ABCA"
+    assert find_naive(pat, text) == [25, 30, 34, 39, 42]
+
 
 def test_KMP_simple():
     text = "ALA MA MALEGO KOTA"
@@ -105,20 +119,14 @@ def test_KMP_intersecting_more_letters():
     pat = "AAA"
     assert find_KMP(pat, text) == [0, 1]
 
+    text = "ABABABA"
+    pat = "ABAB"
+    assert find_KMP(pat, text) == [0, 2]
+
 def test_KMP_part_same():
     text = 'MMAMMANN'
     pat = 'MANN'
     assert find_KMP(pat, text) == [4]
-
-# CDRATYABRABARABBR
-# ABB
-
-# ABABABA
-# ABAB
-
-# BBBC
-# BBC
-# niezaleznie czy mamy fragment wzorca i znalezlismy pelen czy mamy fragment i jakis znak sie roznil -> wsrod juz znalezionego fragmentu szukamy poczatkowego znaku wzorca
 
 def test_KMP_not_full():
     text = 'ABCDE'
@@ -158,6 +166,16 @@ def test_KMP_pattern_last():
     pat = "A"
     assert find_KMP(pat, text) == [2]
 
+def test_KMP_pattern_first_last_different():
+    text = "XXAXXAXABCAXABCABCCXABCCABCCXBCCXABCC"
+    pat = "ABCC"
+    assert find_KMP(pat, text) == [15, 20, 24, 33]
+
+def test_KMP_pattern_first_last_same():
+    text = "XXAXXAXAXABXABCDXABCDABCXABCAXABCAABCAXABCABCA"
+    pat = "ABCA"
+    assert find_KMP(pat, text) == [25, 30, 34, 39, 42]
+
 
 def test_KR_simple():
     text = "ALA MA MALEGO KOTA"
@@ -188,6 +206,10 @@ def test_KR_intersecting_more_letters():
     text = "AAAA"
     pat = "AAA"
     assert find_KR(pat, text) == [0, 1]
+
+    text = "ABABABA"
+    pat = "ABAB"
+    assert find_KR(pat, text) == [0, 2]
 
 def test_KR_part_same():
     text = 'MMAMMANN'
@@ -231,3 +253,13 @@ def test_KR_pattern_last():
     text = "BCA"
     pat = "A"
     assert find_KR(pat, text) == [2]
+
+def test_KR_pattern_first_last_different():
+    text = "XXAXXAXABCAXABCABCCXABCCABCCXBCCXABCC"
+    pat = "ABCC"
+    assert find_KR(pat, text) == [15, 20, 24, 33]
+
+def test_KR_pattern_first_last_same():
+    text = "XXAXXAXAXABXABCDXABCDABCXABCAXABCAABCAXABCABCA"
+    pat = "ABCA"
+    assert find_KR(pat, text) == [25, 30, 34, 39, 42]
