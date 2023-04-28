@@ -1,5 +1,6 @@
 from pattern import find_naive, find_KMP, find_KR
 import pytest
+from random import choices, randint
 
 def test_naive_simple():
     text = "ALA MA MALEGO KOTA"
@@ -52,6 +53,15 @@ def test_naive_pattern_longer():
 
     text = 'ABCDEF'
     pat = 'XYZXYZXYZ'
+    assert find_naive(pat, text) == []
+
+def test_naive_pattern_equal():
+    text = 'ABCD'
+    pat = 'ABCD'
+    assert find_naive(pat, text) == [0]
+
+    text = 'ABED'
+    pat = 'ABCD'
     assert find_naive(pat, text) == []
 
 def test_naive_no_pattern_in_text():
@@ -142,6 +152,15 @@ def test_KMP_pattern_longer():
     pat = 'XYZXYZXYZ'
     assert find_KMP(pat, text) == []
 
+def test_KMP_pattern_equal():
+    text = 'ABCD'
+    pat = 'ABCD'
+    assert find_KMP(pat, text) == [0]
+
+    text = 'ABED'
+    pat = 'ABCD'
+    assert find_KMP(pat, text) == []
+
 def test_KMP_no_pattern_in_text():
     text = 'AABAABAAB'
     pat = 'AC'
@@ -230,6 +249,15 @@ def test_KR_pattern_longer():
     pat = 'XYZXYZXYZ'
     assert find_KR(pat, text) == []
 
+def test_KR_pattern_equal():
+    text = 'ABCD'
+    pat = 'ABCD'
+    assert find_KR(pat, text) == [0]
+
+    text = 'ABED'
+    pat = 'ABCD'
+    assert find_KR(pat, text) == []
+
 def test_KR_no_pattern_in_text():
     text = 'AABAABAAB'
     pat = 'AC'
@@ -263,3 +291,24 @@ def test_KR_pattern_first_last_same():
     text = "XXAXXAXAXABXABCDXABCDABCXABCAXABCAABCAXABCABCA"
     pat = "ABCA"
     assert find_KR(pat, text) == [25, 30, 34, 39, 42]
+
+def test_random():
+#     random_cases = []
+#     for i in range(20):
+#         text_len = randint(0,20)
+#         pat_len = randint(0,5)
+#         text = "".join(choices(['a', 'b'], k=text_len))
+#         pat = "".join(choices(['a', 'b'], k=pat_len))
+#         random_cases.append((pat, text))
+
+#     with open('random_cases.txt', 'w') as file:
+#         file.write(str(random_cases))
+
+    random_cases = [('baa', ''), ('ab', 'bbbaa'), ('aaa', 'abbbbbba'), ('b', 'bbabaaaba'), ('', 'abaaabb'), ('', 'aaabbaaaaaaab'), ('bbaa', 'baaabbbabababbbb'), ('bab', 'bbabaabaabaabb'), ('', ''), ('ba', 'bbbbba'), ('ba', 'bbaaaabbbbbaaabbbaa'), ('bbbbb', 'aabababbbaaaaababba'), ('bbba', 'ab'), ('baaaa', 'ba'), ('baaba', 'bbbababbaba'), ('babba', 'bbabbb'), ('b', 'aabaaabbbba'), ('bbaa', 'bbbbababbbabbab'), ('bab', 'babbbbbabaababaa'), ('abbb', 'ab')]
+
+    for case in random_cases:
+        result_naive = find_naive(case[0], case[1])
+        resut_KMP = find_KMP(case[0], case[1])
+        resut_KR = find_KR(case[0], case[1])
+        assert resut_KMP == result_naive
+        assert resut_KR == result_naive

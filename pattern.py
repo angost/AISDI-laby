@@ -84,7 +84,6 @@ def find_KR(pattern, text):
     return index
 
 
-
 # txt = 'AAL MA MAMALEGOMALEGO MALEGO KOTA'
 # # txt = 'ALA MA MALEGO KOTA'
 # pat = 'MALEGO'
