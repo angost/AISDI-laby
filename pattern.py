@@ -16,42 +16,44 @@ def find_naive(pattern, text):
 
 
 def find_KMP(pattern, text):
-    # znak textu i znak patternu:
-    #ROWNE
-        # pierwsze rowne -> idziemy dalej
-        # rowne w srodku patternu -> idziemy dalej
-        # ostatnie rowne -> zapisz i PRZEGLADAJ W POPRZEDNICH
-    #ROZNE
-        # kolejne rozne -> idziemy dalej
-        # pierwsze rozne (przerwanie patternu) -> PRZEGLADAJ W POPRZEDNICH
-
     index = []
-    counter = 0
     if pattern == "":
         return index
-
     i = 0 # text start index
     while i < len(text):
         j = 0 # current pattern index
-        while j < len(pattern):
-            last_equal = (text[i+j] == pattern[j]) and (j == len(pattern)-1)
-            first_different = (text[i+j] != pattern[j]) and (j == 0)
+        next_possible_pattern = None
+        while (j < len(pattern)) and (i+j < len(text)):
+            # Szukanie kolejnego poczatku patternu
+            if (j > 0) and (not next_possible_pattern) and (text[i+j] == pattern[0]):
+                next_possible_pattern = i+j
 
-            if last_equal or first_different:
-                if last_equal:
+            # Znak textu i znak patternu:
+            if text[i+j] == pattern[j]:
+                # pierwsze rowne, rowne w srodku patternu -> idziemy dalej
+                if j != len(pattern)-1:
+                    j += 1
+                # ostatnie rowne -> zapisz i PRZEJDZ DO KOLEJNEGO POCZATKU PATTERNU
+                else:
                     index.append(i)
-                # szukanie w dotychczasowym fragmencie początku kolejnego patternu
-                found_next_pattern_start = False
-                for char in range(i+1, i+j+1):
-                    if char == pattern[0]:
-                        i = char
-                        found_next_pattern_start = True
-                        break
-                if not found_next_pattern_start:
-                    i += j
-
-            j += 1
-        i += 1
+                    if next_possible_pattern:
+                        i = next_possible_pattern
+                    else:
+                        i += len(pattern)
+                    break
+            else:
+                # kolejne rozne -> idziemy dalej
+                if j == 0:
+                    i += 1
+                # pierwsze rozne (przerwanie patternu) -> PRZEJDZ DO KOLEJNEGO POCZATKU PATTERNU
+                else:
+                    if next_possible_pattern:
+                        i = next_possible_pattern
+                    else:
+                        i += j+1
+                break
+        if i+len(pattern) > len(text):
+            break
     return index
 
 def hash(string):
@@ -84,11 +86,19 @@ def find_KR(pattern, text):
 
 
 # txt = 'AAL MA MAMALEGOMALEGO MALEGO KOTA'
+# # txt = 'ALA MA MALEGO KOTA'
 # pat = 'MALEGO'
-# # txt = "AAAAAAAAAAAAAAAAAA"
-# # # pat = "A"
-# # txt = 'MMAMMANN GBRGW'
-# # pat = 'MANN'
+# txt = "AAAAAAAAAAAAAAAAAA"
+# pat = "A"
+# txt = "ABCDABCABCCABCXXXAAC"
+# pat = "ABCC"
+
+# text = "XXAXXAXABCAXABCABCCXABCCABCCXBCCXABCC"
+# for i in range(len(text)):
+#     print(i, text[i])
+
+# txt = 'MMAMMANN GBRGW'
+# pat = 'MANN'
 # txt = 'AAAA'
 # pat = 'AAA'
 # print(find_naive(pat, txt))
