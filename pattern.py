@@ -68,9 +68,6 @@ def find_KR(pattern, text):
         return index
     p_hash = hash(pattern)
     for i in range(len(text)):
-        if i == 16:
-            a=2
-            pass
         if i + len(pattern) > len(text):
             break
         window = text[i:i+len(pattern)]
