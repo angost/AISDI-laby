@@ -59,7 +59,7 @@ def find_KMP(pattern, text):
 def hash(string):
     hash_value = 0
     for i in range(len(string)):
-        hash_value = ord(string[i]) * (10**i)
+        hash_value += ord(string[i])
     return hash_value
 
 def find_KR(pattern, text):
