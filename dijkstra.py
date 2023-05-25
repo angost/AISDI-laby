@@ -4,7 +4,7 @@ import sys
 def main(arguments):
 # def main():
     filename = arguments[0]
-    # filename = "graf2.txt"
+    # filename = "graf3.txt"
     with open(filename, 'r') as filehandle:
         data = filehandle.read()
     data = data.split()
@@ -41,8 +41,12 @@ def main(arguments):
                 start = i
             stop = i
 
-    print("Start-node:", start, "Stop-node:", stop)
-    dijkstra(q, q[start], q[stop])
+    shortest_path = dijkstra(q[::], q[start], q[stop])
+
+    processed_data = [str(q[i].weight) if (q[i] in shortest_path) else " " for i in range(len(data))]
+    for i in range(height):
+        print(" ".join(processed_data[i*width:i*width+width]))
+
 
 def dijkstra(q, start_node, stop_node):
     s = []
@@ -60,19 +64,13 @@ def dijkstra(q, start_node, stop_node):
                     d[neighbour] = d[min_d] + neighbour.weight
                     p[neighbour] = min_d
 
-
-    print("\nShortest distance:", d[stop_node], "\n")
-    found_p = 0
     current_node = stop_node
-    print("Shortest path from stop_node to start_node: (index, weight)")
-    print(stop_node.value, stop_node.weight)
-    while True:
+    shortest_path = []
+    while current_node != -1:
+        shortest_path.append(current_node)
         found_p = p[current_node]
         current_node = found_p
-        if found_p == -1:
-            break
-        print(found_p.value, found_p.weight)
-    return d[stop_node]
+    return shortest_path[::-1]
 
 
 class Node():
