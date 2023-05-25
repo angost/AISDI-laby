@@ -1,10 +1,10 @@
 import argparse
 import sys
 
-# def main(arguments):
-def main():
-    # filename = arguments[0]
-    filename = "graf2.txt"
+def main(arguments):
+# def main():
+    filename = arguments[0]
+    # filename = "graf2.txt"
     with open(filename, 'r') as filehandle:
         data = filehandle.read()
     data = data.split()
@@ -41,7 +41,7 @@ def main():
                 start = i
             stop = i
 
-    print(start, stop)
+    print("Start-node:", start, "Stop-node:", stop)
     dijkstra(q, q[start], q[stop])
 
 def dijkstra(q, start_node, stop_node):
@@ -59,9 +59,12 @@ def dijkstra(q, start_node, stop_node):
                 if d[neighbour] > d[min_d] + neighbour.weight:
                     d[neighbour] = d[min_d] + neighbour.weight
                     p[neighbour] = min_d
-    print(d[stop_node])
+
+
+    print("\nShortest distance:", d[stop_node], "\n")
     found_p = 0
     current_node = stop_node
+    print("Shortest path from stop_node to start_node: (index, weight)")
     print(stop_node.value, stop_node.weight)
     while True:
         found_p = p[current_node]
@@ -69,6 +72,7 @@ def dijkstra(q, start_node, stop_node):
         if found_p == -1:
             break
         print(found_p.value, found_p.weight)
+    return d[stop_node]
 
 
 class Node():
@@ -81,8 +85,8 @@ class Node():
         self.connected_nodes.append(node)
 
 if __name__ == "__main__":
-    #  main(sys.argv[1:])
-    main()
+    main(sys.argv[1:])
+    # main()
 
 
 
