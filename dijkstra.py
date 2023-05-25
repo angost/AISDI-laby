@@ -1,10 +1,10 @@
 import argparse
-import sys 
+import sys
 
 # def main(arguments):
 def main():
     # filename = arguments[0]
-    filename = "graf1.txt"
+    filename = "graf2.txt"
     with open(filename, 'r') as filehandle:
         data = filehandle.read()
     data = data.split()
@@ -14,8 +14,8 @@ def main():
 
     q = []
     for i in range(len(data)):
-        q.append(Node(i, data[i], []))
-    
+        q.append(Node(i, int(data[i]), []))
+
     for i in range(len(q)):
         neighbours = []
         neigh = i+width
@@ -30,7 +30,7 @@ def main():
         neigh = i-1
         if neigh//width == i//width:
             neighbours.append(neigh)
-        
+
         for neigh in neighbours:
             q[i].addConnectedNode(q[neigh])
 
@@ -40,20 +40,35 @@ def main():
             if start == -1:
                 start = i
             stop = i
-            
-    print(start, stop)
-    dijkstra(q, start, stop)
-    
 
-    
+    print(start, stop)
+    dijkstra(q, q[start], q[stop])
+
 def dijkstra(q, start_node, stop_node):
     s = []
     d = {i: float("inf") for i in q}
-    d[start_node] = 0 
+    d[start_node] = 0
     p = {i: -1 for i in q}
-    # while q:
-
-
+    while q:
+        min_d = min(q, key = lambda node : d[node])
+        q.remove(min_d)
+        s.append(min_d)
+        for neighbour in min_d.connected_nodes:
+            if neighbour in q:
+                # Jesli odleglosc sasieda od start-wierzcholka jest wieksza, to znaczy ze lepiej isc sciezka przez min_d stamtad do sasiada
+                if d[neighbour] > d[min_d] + neighbour.weight:
+                    d[neighbour] = d[min_d] + neighbour.weight
+                    p[neighbour] = min_d
+    print(d[stop_node])
+    found_p = 0
+    current_node = stop_node
+    print(stop_node.value, stop_node.weight)
+    while True:
+        found_p = p[current_node]
+        current_node = found_p
+        if found_p == -1:
+            break
+        print(found_p.value, found_p.weight)
 
 
 class Node():
@@ -70,5 +85,5 @@ if __name__ == "__main__":
     main()
 
 
-        
+
 
